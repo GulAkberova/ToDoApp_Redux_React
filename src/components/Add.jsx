@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { todoAction } from "../redux/reducers/toDoActions";
 
 function Add() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const alldata = useSelector((state) => state.toDoReducer);
+  console.log(alldata);
   const handleAdd = () => {
-    dispatch({ type: "ADD_DATA", payload: value });
-    console.log(alldata.text)
+    let newTodo = {
+      id: Math.floor(Math.random() * 9999),
+      value: value
+  }
+  console.log(newTodo)
+    dispatch(todoAction.add(newTodo))
+    
   };
 
   return (
@@ -26,7 +33,7 @@ function Add() {
               alldata.length ? alldata.map((i,key)=>(
                 
                 <div className="todo_add_div" key={key}>
-                <p>{i}</p>
+                <p>{i.value}</p>
             </div>
               )) : <div><h2>Data not found...</h2></div>
             }
